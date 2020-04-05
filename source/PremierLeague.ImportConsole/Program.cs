@@ -52,9 +52,11 @@ namespace PremierLeague.ImportConsole
                 Log.Information("Import der Spiele und Teams in die Datenbank");
 
                 Log.Information("Datenbank löschen");
+                unitOfWork.DeleteDatabase();
                 // TODO: Datenbank löschen
 
                 Log.Information("Datenbank migrieren");
+                unitOfWork.MigrateDatabase();
                 // TODO: Datenbank migrieren
 
                 Log.Information("Spiele werden von premierleague.csv eingelesen");
@@ -68,12 +70,15 @@ namespace PremierLeague.ImportConsole
                     Log.Debug($"  Es wurden {games.Count()} Spiele eingelesen!");
 
                     // TODO: Teams aus den Games ermitteln
-                    var teams = Enumerable.Empty<Team>();
+                    var teams = ImportController.teamteam().ToArray();
                     Log.Debug($"  Es wurden {teams.Count()} Teams eingelesen!");
 
                     Log.Information("Daten werden in Datenbank gespeichert (in Context übertragen)");
 
-                    // TODO: Teams/Games in der Datenbank speichern
+                    unitOfWork.Games.AddRange(games);
+                    //unitOfWork.SaveChanges();
+                    unitOfWork.Teams.AddRange(teams);
+                   // unitOfWork.SaveChanges();
                     Log.Information("Daten wurden in DB gespeichert!");
                 }
             }
@@ -81,7 +86,21 @@ namespace PremierLeague.ImportConsole
 
         private static void AnalyzeData()
         {
-            throw new NotImplementedException();
+             using (IUnitOfWork unitOfWork = new UnitOfWork())
+            {
+               /* var teamWithMostGoals = unitOfWork.Teams.GetTeamWithMostGoals();
+                PrintResult(
+                $"Team mit den meisten geschossenen Toren:",
+                $"{teamWithMostGoals.Team.Name}: {teamWithMostGoals.Goals} Tore");
+
+                var teamWithMostAwayGoals = unitOfWork.Teams.GetTeamWithMostAwayGoals();
+                PrintResult(
+                $"Team mit den meisten geschossenen Auswärtstoren:",
+                $"{teamWithMostAwayGoals.Team.Name}: {teamWithMostAwayGoals.Goals} Tore");*/
+
+
+            }
+
         }
 
         /// <summary>

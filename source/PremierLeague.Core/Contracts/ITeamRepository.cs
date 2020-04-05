@@ -1,6 +1,7 @@
 ﻿using PremierLeague.Core.DataTransferObjects;
 using PremierLeague.Core.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PremierLeague.Core.Contracts
 {
@@ -11,5 +12,8 @@ namespace PremierLeague.Core.Contracts
         void AddRange(IEnumerable<Team> teams);
         Team Get(int teamId);
         void Add(Team team);
+       /* (Team Team, int Goals) GetTeamWithMostGoals();
+        (Team Team, int Goals) GetTeamWithMostAwayGoals();*/
+
     }
 }

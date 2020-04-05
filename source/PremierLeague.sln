@@ -10,6 +10,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj", "{8F730043-A2C6-4B09-AB4F-7C32B6263E48}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PremierLeague.ImportConsole", "PremierLeague.ImportConsole\PremierLeague.ImportConsole.csproj", "{E1FB2766-89B4-4F4E-AE7C-595473BC9360}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F730043-A2C6-4B09-AB4F-7C32B6263E48} = {8F730043-A2C6-4B09-AB4F-7C32B6263E48}
+		{7213CD6E-0450-4E9D-905F-AFAD9D1D0B36} = {7213CD6E-0450-4E9D-905F-AFAD9D1D0B36}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
