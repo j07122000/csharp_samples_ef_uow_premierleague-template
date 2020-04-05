@@ -75,9 +75,8 @@ namespace PremierLeague.ImportConsole
                        .Select(t => new
                        {
                            Team = t.HomeTeam
-                       });
-
-                    teams.Concat(games.Select(t => new
+                       })
+                    .Concat(games.Select(t => new
                     {
                         Team = t.GuestTeam
 
@@ -87,6 +86,9 @@ namespace PremierLeague.ImportConsole
 
                     Log.Information("Daten werden in Datenbank gespeichert (in Context übertragen)");
 
+                 //   var t = ImportController.teamteam();
+                 //   unitOfWork.Teams.AddRange(t);
+                    unitOfWork.SaveChanges();
                     unitOfWork.Games.AddRange(games);
                     unitOfWork.SaveChanges();
                     Log.Information("Daten wurden in DB gespeichert!");

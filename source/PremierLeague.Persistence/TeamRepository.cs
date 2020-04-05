@@ -47,9 +47,10 @@ namespace PremierLeague.Persistence
                  .Select(t => new Tuple<Team,int>
                  (
                      t,
-                     t.HomeGames.Select(s => s.HomeGoals).Sum() + t.AwayGames.Select(s => s.GuestGoals).Sum()
+                     t.AwayGames.Select(s => s.GuestGoals).Sum() + t.HomeGames.Select(s => s.HomeGoals).Sum() 
 
                  ).ToValueTuple())
+                 .AsEnumerable()
                  .OrderByDescending(o => o.Item2)
                  .First();
            

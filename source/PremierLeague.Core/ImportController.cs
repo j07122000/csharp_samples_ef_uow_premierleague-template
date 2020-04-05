@@ -10,7 +10,7 @@ namespace PremierLeague.Core
     {
         public static IEnumerable<Game> ReadFromCsv()
         {
-            string[][] matrix = MyFile.ReadStringMatrixFromCsv("PremierLeague.csv", false);
+            var matrix = MyFile.ReadStringMatrixFromCsv("PremierLeague.csv", false);
 
             var teams = matrix
                 .GroupBy(t => t[1])
@@ -26,16 +26,14 @@ namespace PremierLeague.Core
                     Round = Convert.ToInt32(g[0]),
                     HomeTeam = teams.Single(s => s.Name == g[1]),
                     GuestTeam = teams.Single(s => s.Name == g[2]),
-                    GuestGoals = Convert.ToInt32(g[3]),
-                    HomeGoals = Convert.ToInt32(g[4])
+                    GuestGoals = Convert.ToInt32(g[4]),
+                    HomeGoals = Convert.ToInt32(g[3])
                    
                 }).ToArray();
             return games;
 
         }
 
-      
- 
-
+  
     }
 }

@@ -13,7 +13,7 @@ namespace PremierLeague.Core.Contracts
         Team Get(int teamId);
         void Add(Team team);
         (Team Team, int Goals) GetTeamWithMostGoals();
-        /*(Team Team, int Goals) GetTeamWithMostAwayGoals();*/
+    //    (Team Team, int Goals) GetTeamWithMostAwayGoals();
 
     }
 }
