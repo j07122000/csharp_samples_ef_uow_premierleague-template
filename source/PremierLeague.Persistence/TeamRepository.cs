@@ -56,17 +56,42 @@ namespace PremierLeague.Persistence
            
 
         }
-      /*  public (Team Team, int Goals) GetTeamWithMostAwayGoals()
+        public (Team Team, int Goals) GetTeamWithMostAwayGoals()
         {
             return _dbContext.Teams
                 .Select(t => new Tuple<Team, int>
                 (
                     t,
-                    t.HomeGames.Select(s => s.GuestGoals).Sum()
+                    t.AwayGames.Select(s => s.GuestGoals).Sum()
                 ).ToValueTuple())
+                .AsEnumerable()
                  .OrderByDescending(o => o.Item2)
                  .First();
-        }*/
+        }
+        public (Team Team, int Goals) GetTeamWithMostHomeGoals()
+        {
+             return _dbContext.Teams
+                .Select(t => new Tuple<Team, int>
+                (
+                    t,
+                    t.AwayGames.Select(s => s.GuestGoals).Sum()
+                ).ToValueTuple())
+                .AsEnumerable()
+                 .OrderByDescending(o => o.Item2)
+                 .First();
+        }
+        public (Team Team, int Difference) GetTeamWithBestGoalDifference()
+        {
+            return _dbContext.Teams
+               .Select(t => new Tuple<Team, int>
+               (
+                   t,
+                   (t.HomeGames.Sum(g => g.HomeGoals) + t.AwayGames.Sum(g => g.GuestGoals)) - (t.HomeGames.Sum(g => g.GuestGoals) + t.AwayGames.Sum(g => g.HomeGoals))
+               ).ToValueTuple())
+               .AsEnumerable()
+                .OrderByDescending(o => o.Item2)
+                .First();
+        }
 
 
     }

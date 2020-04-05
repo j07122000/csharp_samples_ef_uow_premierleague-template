@@ -105,12 +105,20 @@ namespace PremierLeague.ImportConsole
                 $"Team mit den meisten geschossenen Toren:",
                 $"{teamWithMostGoals.Team.Name}: {teamWithMostGoals.Goals} Tore");
 
-              /*  var teamWithMostAwayGoals = unitOfWork.Teams.GetTeamWithMostAwayGoals();
+                var teamWithMostAwayGoals = unitOfWork.Teams.GetTeamWithMostAwayGoals();
                 PrintResult(
                 $"Team mit den meisten geschossenen Auswärtstoren:",
-                $"{teamWithMostAwayGoals.Team.Name}: {teamWithMostAwayGoals.Goals} Tore");*/
+                $"{teamWithMostAwayGoals.Team.Name}: {teamWithMostAwayGoals.Goals} Auswärtstore");
 
+                var teamWithMostHomeGoals = unitOfWork.Teams.GetTeamWithMostHomeGoals();
+                PrintResult(
+                $"Team mit den meisten geschossenen Heimtoren:",
+                $"{teamWithMostHomeGoals.Team.Name}: {teamWithMostHomeGoals.Goals} Heimtore");
 
+                var teamWithBestGoalDifference = unitOfWork.Teams.GetTeamWithBestGoalDifference();
+                PrintResult(
+                $"Team mit dem besten Torverhältnis:",
+                $"{teamWithBestGoalDifference.Team.Name}: {teamWithBestGoalDifference.Difference} Torverhältnis");
             }
 
         }
