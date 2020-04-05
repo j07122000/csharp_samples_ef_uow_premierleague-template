@@ -4,6 +4,7 @@ using PremierLeague.Core.Entities;
 using PremierLeague.Persistence;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PremierLeague.ImportConsole
@@ -70,15 +71,24 @@ namespace PremierLeague.ImportConsole
                     Log.Debug($"  Es wurden {games.Count()} Spiele eingelesen!");
 
                     // TODO: Teams aus den Games ermitteln
-                    var teams = ImportController.teamteam().ToArray();
+                    var teams = games
+                       .Select(t => new
+                       {
+                           Team = t.HomeTeam
+                       });
+
+                    teams.Concat(games.Select(t => new
+                    {
+                        Team = t.GuestTeam
+
+                    })).Distinct().ToArray();
+
                     Log.Debug($"  Es wurden {teams.Count()} Teams eingelesen!");
 
                     Log.Information("Daten werden in Datenbank gespeichert (in Context übertragen)");
 
                     unitOfWork.Games.AddRange(games);
-                    //unitOfWork.SaveChanges();
-                    unitOfWork.Teams.AddRange(teams);
-                   // unitOfWork.SaveChanges();
+                    unitOfWork.SaveChanges();
                     Log.Information("Daten wurden in DB gespeichert!");
                 }
             }
@@ -88,12 +98,12 @@ namespace PremierLeague.ImportConsole
         {
              using (IUnitOfWork unitOfWork = new UnitOfWork())
             {
-               /* var teamWithMostGoals = unitOfWork.Teams.GetTeamWithMostGoals();
+                var teamWithMostGoals = unitOfWork.Teams.GetTeamWithMostGoals();
                 PrintResult(
                 $"Team mit den meisten geschossenen Toren:",
                 $"{teamWithMostGoals.Team.Name}: {teamWithMostGoals.Goals} Tore");
 
-                var teamWithMostAwayGoals = unitOfWork.Teams.GetTeamWithMostAwayGoals();
+              /*  var teamWithMostAwayGoals = unitOfWork.Teams.GetTeamWithMostAwayGoals();
                 PrintResult(
                 $"Team mit den meisten geschossenen Auswärtstoren:",
                 $"{teamWithMostAwayGoals.Team.Name}: {teamWithMostAwayGoals.Goals} Tore");*/

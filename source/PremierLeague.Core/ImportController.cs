@@ -8,7 +8,6 @@ namespace PremierLeague.Core
 {
     public static class ImportController
     {
-        public static IEnumerable<Team> allTeams;
         public static IEnumerable<Game> ReadFromCsv()
         {
             string[][] matrix = MyFile.ReadStringMatrixFromCsv("PremierLeague.csv", false);
@@ -31,15 +30,11 @@ namespace PremierLeague.Core
                     HomeGoals = Convert.ToInt32(g[4])
                    
                 }).ToArray();
-            allTeams = teams;
             return games;
 
         }
 
-        public static IEnumerable<Team> teamteam()
-        {
-            return allTeams;
-        }
+      
  
 
     }

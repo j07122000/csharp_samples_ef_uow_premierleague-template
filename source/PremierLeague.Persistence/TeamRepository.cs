@@ -41,7 +41,7 @@ namespace PremierLeague.Persistence
         {
             _dbContext.Teams.Add(team);
         }
-      /*  public (Team Team, int Goals) GetTeamWithMostGoals()
+        public (Team Team, int Goals) GetTeamWithMostGoals()
         {
              return _dbContext.Teams
                  .Select(t => new Tuple<Team,int>
@@ -55,7 +55,7 @@ namespace PremierLeague.Persistence
            
 
         }
-        public (Team Team, int Goals) GetTeamWithMostAwayGoals()
+      /*  public (Team Team, int Goals) GetTeamWithMostAwayGoals()
         {
             return _dbContext.Teams
                 .Select(t => new Tuple<Team, int>
