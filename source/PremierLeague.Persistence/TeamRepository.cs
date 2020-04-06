@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PremierLeague.Core.Contracts;
+using PremierLeague.Core.DataTransferObjects;
 using PremierLeague.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -92,6 +93,63 @@ namespace PremierLeague.Persistence
                 .OrderByDescending(o => o.Item2)
                 .First();
         }
+
+        public TeamStatisticDto[] GetTeamAverage()
+        {
+            return _dbContext.Teams
+                .Select(s => new TeamStatisticDto()
+                {
+                    Name = s.Name,
+                    AvgGoalsShotAtHome = s.HomeGames.Average(g => g.HomeGoals),
+                    AvgGoalsShotOutwards = s.AwayGames.Average(g => g.GuestGoals),
+                    AvgGoalsGotInTotal = (s.AwayGames.Average(g => g.GuestGoals) + s.HomeGames.Average(g => g.HomeGoals))/2,
+                    AvgGoalsGotAtHome = s.HomeGames.Average(g => g.GuestGoals),
+                    AvgGoalsGotOutwards = s.AwayGames.Average(g => g.HomeGoals),
+                    AvgGoalsShotInTotal = (s.HomeGames.Average(g => g.GuestGoals) + s.AwayGames.Average(g => g.HomeGoals))/2
+                })
+                .OrderByDescending(o => o.AvgGoalsShotInTotal)
+                .ToArray();
+        }
+
+        public  TeamTableRowDto[] GetTeamTable()
+        {
+            var teams = _dbContext.Teams
+                 .Select(team => new
+                 {
+                     Id = team.Id,
+                     Name = team.Name,
+                     Matches = team.AwayGames.Count() + team.HomeGames.Count(),
+                     Won = team.AwayGames.Where(game => game.GuestGoals > game.HomeGoals).Count()
+                             + team.HomeGames.Where(game => game.HomeGoals > game.GuestGoals).Count(),
+                     Lost = team.AwayGames.Where(game => game.GuestGoals < game.HomeGoals).Count()
+                             + team.HomeGames.Where(game => game.HomeGoals < game.GuestGoals).Count(),
+                     GoalsFor = team.AwayGames.Select(game => game.GuestGoals).Sum() +
+                             team.HomeGames.Select(game => game.HomeGoals).Sum(),
+                     GoalsAgainst = team.AwayGames.Select(game => game.HomeGoals).Sum() +
+                             team.HomeGames.Select(game => game.GuestGoals).Sum(),
+
+                 })
+
+                 .ToArray();
+            return teams.Select(team => new TeamTableRowDto
+            {
+                Id = team.Id,
+                Name = team.Name,
+                Matches = team.Matches,
+                Won = team.Won,
+                Lost = team.Lost,
+                GoalsFor = team.GoalsFor,
+                GoalsAgainst = team.GoalsAgainst,
+
+            })
+            .Where((team, index) => { team.Rank = index + 1; return true; })
+            .OrderByDescending(t => t.Rank + t.Drawn)
+            .ToArray();
+
+        }
+
+
+
 
 
     }

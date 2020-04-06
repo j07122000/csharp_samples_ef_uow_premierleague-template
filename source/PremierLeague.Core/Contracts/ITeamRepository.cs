@@ -16,5 +16,7 @@ namespace PremierLeague.Core.Contracts
         (Team Team, int Goals) GetTeamWithMostAwayGoals();
         (Team Team, int Goals) GetTeamWithMostHomeGoals();
         (Team Team, int Difference) GetTeamWithBestGoalDifference();
+        TeamStatisticDto[] GetTeamAverage();
+        TeamTableRowDto[] GetTeamTable();
     }
 }
