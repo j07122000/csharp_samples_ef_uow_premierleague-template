@@ -143,7 +143,8 @@ namespace PremierLeague.Persistence
 
             })
             .Where((team, index) => { team.Rank = index + 1; return true; })
-            .OrderByDescending(t => t.Rank + t.Drawn)
+            .OrderByDescending(t => t.Points)
+            .ThenByDescending(t => t.GoalDifference)
             .ToArray();
 
         }
